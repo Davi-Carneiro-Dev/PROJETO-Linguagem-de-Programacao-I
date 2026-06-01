@@ -1,4 +1,7 @@
 package enums;
 
-public class SituacaoAluno {
+public enum SituacaoAluno {
+    APROVADO,
+    REPROVADO,
+    RECUPERACAO
 }

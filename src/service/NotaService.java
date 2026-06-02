@@ -53,10 +53,7 @@ public class NotaService {
             return false;
         }
 
-        Nota nota = buscarNota(
-                matriculaAluno,
-                codigoDisciplina
-        );
+        Nota nota = buscarNota(matriculaAluno, codigoDisciplina);
 
         if (nota == null) {
             return false;
@@ -66,13 +63,8 @@ public class NotaService {
         return true;
     }
 
-    public boolean removerNota(String matriculaAluno,
-                               int codigoDisciplina) {
-
-        Nota nota = buscarNota(
-                matriculaAluno,
-                codigoDisciplina
-        );
+    public boolean removerNota(String matriculaAluno, int codigoDisciplina) {
+        Nota nota = buscarNota(matriculaAluno, codigoDisciplina);
 
         if (nota == null) {
             return false;
@@ -80,24 +72,6 @@ public class NotaService {
 
         notas.remove(nota);
         return true;
-    }
-
-    public double calcularMediaAluno(String matriculaAluno) {
-        double soma = 0;
-        int quantidade = 0;
-
-        for (Nota nota : notas) {
-            if (nota.getAluno().getMatricula().equals(matriculaAluno)) {
-                soma += nota.getValor();
-                quantidade++;
-            }
-        }
-
-        if (quantidade == 0) {
-            return 0;
-        }
-
-        return soma / quantidade;
     }
 
     public List<Nota> listarNotasPorAluno(String matriculaAluno) {
@@ -110,6 +84,22 @@ public class NotaService {
         }
 
         return notasDoAluno;
+    }
+
+    public double calcularMediaAluno(String matriculaAluno) {
+        List<Nota> notasDoAluno = listarNotasPorAluno(matriculaAluno);
+
+        if (notasDoAluno.isEmpty()) {
+            return 0;
+        }
+
+        double soma = 0;
+
+        for (Nota nota : notasDoAluno) {
+            soma += nota.getValor();
+        }
+
+        return soma / notasDoAluno.size();
     }
 
     private boolean notaValida(double valor) {
